@@ -1,0 +1,35 @@
+Dataset-FID: 15.740397
+Dataset-KID: 1.203350
+high_conf_fraction: 0.968000
+class_entropy: 2.279248
+entropy_fraction: 0.989865
+nn_mean_dist: 8.945617
+fid_vs_train: 14.622286
+fid_vs_test: 15.740397
+proxy_bpd: 0.052641
+
+
+
+| Metric                      | Value             | What it means                                                                                                               |
+| --------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Dataset-FID                 | 15.74             | Fréchet distance between real and generated features in φ-space. Lower = better. ~15 is good for FashionMNIST at 100k steps |
+| Dataset-KID                 | 1.20              | Polynomial-kernel MMD (unbiased estimator). More reliable than FID at small N. Confirms same story                          |
+| high_conf_fraction          | 0.968             | 96.8% of generated samples get a confident prediction from the classifier → almost all look like valid clothing items       |
+| class_entropy               | 2.279 / 2.303 max | 98.9% of maximum possible entropy → model generates all 10 classes fairly uniformly, no mode collapse                       |
+| nn_mean_dist                | 8.946             | Mean ℓ₂ distance to nearest training image. Large value → no memorization                                                   |
+| fid_vs_train vs fid_vs_test | 14.62 / 15.74     | Very similar gap → model generalizes, didn't just overfit to training set                                                   |
+| proxy_bpd                   | 0.053             | Proxy bits-per-dim via L_simple. Low value indicates good compression/density estimate                                      |
+
+
+
+Proxy BPD (bits-per-dimension)
+
+It is an approximate measure of how well the model models the data distribution.
+
+It is computed from the training loss (e.g., L_simple in diffusion models) and converted into bits per data dimension (pixel).
+
+It represents how many bits the model needs to encode each pixel of the data.
+
+Meaning of the value:
+
+Lower BPD → better density estimation, meaning the model assigns higher probability to real data and models the dataset more accurately.
